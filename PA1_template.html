@@ -467,7 +467,7 @@ print(median_updated_total_steps)</code></pre>
 <h2>Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends</h2>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level4">
 <h4>Are there differences in activity patterns between weekdays and weekends?</h4>
-<pre class="r"><code>#New factor variable of dataset - dayofweek
+<pre class="r"><code>#New factor variable of dataset
 updated_activity$weekdays &lt;- weekdays(as.Date(updated_activity$date))
 updated_activity$weekdays = factor(updated_activity$weekdays)
 

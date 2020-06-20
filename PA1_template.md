@@ -141,7 +141,7 @@ The values differ from the estimates earlier. The mean and median are now equal 
 
 
 ```r
-#New factor variable of dataset - dayofweek
+#New factor variable of dataset
 updated_activity$weekdays <- weekdays(as.Date(updated_activity$date))
 updated_activity$weekdays = factor(updated_activity$weekdays)
 
