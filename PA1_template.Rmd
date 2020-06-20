@@ -115,4 +115,4 @@ average_step_weeks <- aggregate(steps ~ interval + dayofweek, data = updated_act
 xyplot(steps ~ interval | dayofweek, data = average_step_weeks, type = "l", layout = c(1, 2), xlab = "Interval", ylab = "Number of steps", main = "Average Number of Steps Among Weekdays and Weekends")
 ```
 
-There are differences in activities between the average number of steps taken in the weekdays and weekends. The number of steps in the weekend occurs throughout the days, as opposed to certain intervals in the weekdays. 
+There are differences in activities between the average number of steps taken in the weekdays and weekends. The number of steps in the weekend occurs throughout the day, as opposed to during certain intervals on the weekdays. 

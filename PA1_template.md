@@ -160,4 +160,4 @@ xyplot(steps ~ interval | dayofweek, data = average_step_weeks, type = "l", layo
 
 ![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
-There are differences in activities between the average number of steps taken in the weekdays and weekends. The number of steps in the weekend occurs throughout the days, as opposed to certain intervals in the weekdays. 
+There are differences in activities between the average number of steps taken in the weekdays and weekends. The number of steps in the weekend occurs throughout the day, as opposed to during certain intervals on the weekdays. 
