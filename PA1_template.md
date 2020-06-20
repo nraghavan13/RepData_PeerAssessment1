@@ -6,7 +6,8 @@ output:
 ---
 
 ## Loading and preprocessing the data
-```{r echo = TRUE}
+
+```r
 fileURL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 download.file(fileURL, destfile="./dataset.zip")
 unzip(zipfile="./dataset.zip", exdir="./dataset")
@@ -20,76 +21,116 @@ activity <- read.csv("./dataset/activity.csv", header=TRUE)
 ## Histogram of the total number of steps taken each day
 #### Calculate total number of steps taken each day
 #### Histogram total number of steps taken each day
-```{r echo = TRUE}
+
+```r
 totalsteps <- aggregate(steps ~ date, activity, FUN=sum)
 hist(totalsteps$steps, xlab= "Steps",  main= "Total Daily Steps")
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
 ## Mean and median number of steps taken each day
 
 #### Mean number of steps taken each day
-```{r echo = TRUE}
+
+```r
 meantotalsteps <- mean(totalsteps$steps)
 print(meantotalsteps)
-``` 
+```
+
+```
+## [1] 10766.19
+```
 
 #### Median number of steps taken each day
-```{r echo = TRUE}
+
+```r
 mediantotalsteps <- median(totalsteps$steps)
 print(mediantotalsteps)
+```
+
+```
+## [1] 10765
 ```
 
 ## Time series plot of the average number of steps taken
 #### What is the average daily activity pattern?
 #### Time series plot of the 5-minute interval and the average number of steps taken, averaged across all days
 
-```{r echo = TRUE}
+
+```r
 averageStepsDaily <- aggregate(steps ~ interval, activity, mean)
 ggplot(data = averageStepsDaily, aes(interval, steps)) +
   geom_line() +
   ggtitle("Average Daily Activity Pattern") +
   xlab("5-minute Time Interval") +
   ylab("Average Number of Steps")
-````
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 #### The 5-minute interval that, on average, contains the maximum number of steps
-```{r echo = TRUE}
+
+```r
 averageStepsDaily$interval[which.max(averageStepsDaily$steps)]
+```
+
+```
+## [1] 835
 ```
 The 5-minute time interval that contains the maximum number of steps is 835.
 
 ## Imputing missing values
 
 #### Total number of missing values
-```{r echo = TRUE}
+
+```r
 missingData <- table(is.na(activity) == TRUE)
 missingData[[2]]
 ```
 
+```
+## [1] 2304
+```
+
 #### Strategy for imputing missing values in dataset
 #### New dataset that is equal to the original dataset but with the missing data filled in.
-```{r echo = TRUE}
+
+```r
 # Replace NA values with mean --> New dataset == "updated_activity"
 updated_activity <- activity
 updated_activity$steps[is.na(updated_activity$steps)] <- mean(updated_activity$steps, na.rm = T)
 ```
 
 #### Histogram of the total number of steps taken each day after missing values are impusted
-```{r echo = TRUE}
+
+```r
 updated_total_steps <- aggregate(steps ~ date, data = updated_activity, sum)
 hist(updated_total_steps$steps, main = "Total Daily Steps - Updated", xlab = "Steps")
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
 #### Mean steps after accounting for missing values
-```{r echo = TRUE}
+
+```r
 mean_updated_total_steps <- mean(updated_total_steps$steps)
 print(mean_updated_total_steps)
 ```
 
+```
+## [1] 10766.19
+```
+
 #### Median steps after accounting for missing values
-```{r echo = TRUE}
+
+```r
 median_updated_total_steps <- median(updated_total_steps$steps)
 print(median_updated_total_steps)
+```
+
+```
+## [1] 10766.19
 ```
 
 The values differ from the estimates earlier. The mean and median are now equal as we have updated the missing values of the total daily number of steps. 
@@ -98,7 +139,8 @@ The values differ from the estimates earlier. The mean and median are now equal 
 
 #### Are there differences in activity patterns between weekdays and weekends?
 
-```{r echo = TRUE}
+
+```r
 #New factor variable of dataset - dayofweek
 updated_activity$weekdays <- weekdays(as.Date(updated_activity$date))
 updated_activity$weekdays = factor(updated_activity$weekdays)
@@ -110,9 +152,12 @@ updated_activity$dayofweek[!(updated_activity$weekdays == "Saturday" | updated_a
 ```
 
 #### Panel plot
-```{r echo = TRUE}
+
+```r
 average_step_weeks <- aggregate(steps ~ interval + dayofweek, data = updated_activity, mean)
 xyplot(steps ~ interval | dayofweek, data = average_step_weeks, type = "l", layout = c(1, 2), xlab = "Interval", ylab = "Number of steps", main = "Average Number of Steps Among Weekdays and Weekends")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
 There are differences in activities between the average number of steps taken in the weekdays and weekends. The number of steps in the weekend occurs throughout the days, as opposed to certain intervals in the weekdays. 
